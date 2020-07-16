@@ -7,18 +7,14 @@ import org.springframework.data.cassandra.core.mapping.Table;
 
 import javax.persistence.Column;
 import java.time.LocalDate;
-import java.util.UUID;
-
 
 @Table("wallet")
 public class Wallet {
 
 
-    @PrimaryKeyColumn(name="WALLETID", type=PrimaryKeyType.CLUSTERED)
+    @PrimaryKey
+    @Column(name="WALLETID", length=50,nullable=false,unique=true)
     private String walletId;
-
-    @PrimaryKeyColumn(name="USERID", type= PrimaryKeyType.PARTITIONED)
-    private UUID userId;
 
     @Column(name="CARDHOLDER NAME",length=50,nullable=false,unique=true)
     private String cardholder_name;
@@ -39,10 +35,9 @@ public class Wallet {
         // TODO Auto-generated constructor stub
     }
 
-    public Wallet(String walletId, UUID userId, String cardholder_name,Long card_number,LocalDate expiry_date, String upi_id) {
+    public Wallet(String walletId, String cardholder_name,Long card_number,LocalDate expiry_date, String upi_id) {
         super();
         this.walletId = walletId;
-        this.userId = userId;
         this.cardholder_name = cardholder_name;
         this.card_number = card_number;
         this.expiry_date = expiry_date;
@@ -53,15 +48,6 @@ public class Wallet {
     public String getWalletId() {
         return walletId;
     }
-
-    public String getUserId() {
-        return UUID.randomUUID().toString();
-    }
-
-    public void setuserId(UUID userId) {
-        this.userId = userId;
-    }
-
 
     public void setWalletId(String walletId) {
         this.walletId = walletId;
