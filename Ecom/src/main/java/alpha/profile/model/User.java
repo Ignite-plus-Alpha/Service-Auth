@@ -6,15 +6,14 @@ import org.springframework.data.cassandra.core.mapping.Table;
 
 
 import javax.persistence.*;
-import java.util.UUID;
-
 
 @Table("profile")
 public class User {
 
 
-    @PrimaryKeyColumn(name="USERID", type= PrimaryKeyType.PARTITIONED)
-    private UUID userId;
+    @PrimaryKey
+    @Column(name="USERID",length=50,nullable=false,unique=true )
+    private String userId;
 
     @Column(name="FIRSTNAME",length=50,nullable=false,unique=true)
     private String firstname;
@@ -22,7 +21,7 @@ public class User {
     @Column(name="LASTNAME",length=50,nullable=false,unique=true)
     private String lastname;
 
-    @PrimaryKeyColumn(name="EMAIL", type=PrimaryKeyType.CLUSTERED)
+    @Column(name="EMAIL",length=50,nullable=false,unique=true)
     private String email;
 
     @Column(name="MOBILE",length=10,nullable=false)
@@ -37,7 +36,7 @@ public class User {
         // TODO Auto-generated constructor stub
     }
 
-    public User(UUID userId, String firstname,String lastname,String email, String mobile, String password) {
+    public User(String userId, String firstname,String lastname,String email, String mobile, String password) {
         super();
         this.userId = userId;
         this.firstname = firstname;
@@ -48,10 +47,10 @@ public class User {
     }
 
     public String getUserid() {
-        return UUID.randomUUID().toString();
+        return userId;
     }
 
-    public void setUserid(UUID userId) {
+    public void setUserid(String userId) {
         this.userId = userId;
     }
 
