@@ -8,12 +8,9 @@ import java.util.UUID;
 
 @Table("address")
 public class Address {
-    @PrimaryKeyColumn(name="ADDRESSID", type= PrimaryKeyType.CLUSTERED)
+    @PrimaryKey
+    @Column(name="ADDRESSID",length=50,nullable=false,unique=true )
     private String addressId;
-
-    @PrimaryKeyColumn(name="USERID", type= PrimaryKeyType.PARTITIONED)
-    private UUID userId;
-
 
     @Column(name="ADDRESS_LINE1",length=50,nullable=false,unique=true)
     private String address_line1;
@@ -39,10 +36,9 @@ public class Address {
         // TODO Auto-generated constructor stub
     }
 
-    public Address(String addressId,UUID userId, String address_line1,String address_line2,String city, Long zipcode, String state,String country) {
+    public Address(String addressId, String address_line1,String address_line2,String city, Long zipcode, String state,String country) {
         super();
         this.addressId = addressId;
-        this.userId = userId;
         this.address_line1 = address_line1;
         this.address_line2 = address_line2;
         this.city=city;
@@ -53,14 +49,6 @@ public class Address {
 
     public String getAddressid() {
         return addressId;
-    }
-
-    public String getUserId() {
-        return UUID.randomUUID().toString();
-    }
-
-    public void setuserId(UUID userId) {
-        this.userId = userId;
     }
 
     public void setAddressid(String addressId) {
