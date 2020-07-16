@@ -1,15 +1,20 @@
 package alpha.profile.model;
 
-import org.springframework.data.cassandra.core.mapping.PrimaryKey;
+import org.springframework.data.cassandra.core.cql.PrimaryKeyType;
+import org.springframework.data.cassandra.core.mapping.PrimaryKeyColumn;
 import org.springframework.data.cassandra.core.mapping.Table;
+
+
 import javax.persistence.*;
+import java.util.UUID;
 
 
 @Table("profile")
 public class User {
 
-    @PrimaryKey
-    private String userId;
+
+    @PrimaryKeyColumn(name="USERID", type= PrimaryKeyType.PARTITIONED)
+    private UUID userId;
 
     @Column(name="FIRSTNAME",length=50,nullable=false,unique=true)
     private String firstname;
@@ -17,7 +22,7 @@ public class User {
     @Column(name="LASTNAME",length=50,nullable=false,unique=true)
     private String lastname;
 
-    @Column(name="EMAIL",length=30,nullable=false)
+    @PrimaryKeyColumn(name="EMAIL", type=PrimaryKeyType.CLUSTERED)
     private String email;
 
     @Column(name="MOBILE",length=10,nullable=false)
@@ -32,7 +37,7 @@ public class User {
         // TODO Auto-generated constructor stub
     }
 
-    public User(String userId, String firstname,String lastname,String email, String mobile, String password) {
+    public User(UUID userId, String firstname,String lastname,String email, String mobile, String password) {
         super();
         this.userId = userId;
         this.firstname = firstname;
@@ -43,10 +48,10 @@ public class User {
     }
 
     public String getUserid() {
-        return userId;
+        return UUID.randomUUID().toString();
     }
 
-    public void setUserid(String userId) {
+    public void setUserid(UUID userId) {
         this.userId = userId;
     }
 
